@@ -4,8 +4,8 @@ public class MatrixTraversal {
 
     public int[] print(int[][] input) {
 
-        int n = input.length;//col
-        int m = input[0].length;//row
+        int m = input.length;//row
+        int n = input[0].length;//col
         int[] result = new int[n* m];
         int dx = 1;
         int dy = 0;
@@ -13,6 +13,8 @@ public class MatrixTraversal {
         int col = 0;
         int colMax = n;
         int rowMax = m;
+        int colMin = 0;
+        int rowMin = 0;
 
         for (int index = 0; index < n*m; index++) {
 
@@ -21,16 +23,38 @@ public class MatrixTraversal {
             row += dy;
             col += dx;
 
-            if ((col <0 || col >= colMax) || (row < 0 || row >= rowMax)){
+            if ((col < colMin || col >= colMax) || (row < rowMin || row >= rowMax)){
                 if (dx == 0){
                     dx = -dy;
+
+                    if (dy > 0){
+
+                        colMax--;
+
+                    }else {
+
+                        colMin--;
+                    }
+
                     row -= dy;
-                    rowMax--;
+                    col += dx;
+
+                    dy = 0;
                 }else{
                     dy = dx;
+
+                    if (dx > 0){
+
+                        rowMin++;
+
+                    }else {
+
+                        rowMax--;
+                    }
                     col -= dx;
+                    row += dy;
+
                     dx = 0;
-                    colMax--;
                 }
             }
         }

@@ -25,4 +25,22 @@ public class MatrixTraversalTest {
         Assert.assertArrayEquals("traversal 4x4", result, matrixTraversal.print(input));
     }
 
+    @Test
+    public void print3x4() throws Exception {
+
+        MatrixTraversal matrixTraversal = new MatrixTraversal();
+
+        int[][] input = {
+                {1, 2, 3},
+                {4, 5, 6},
+                {7, 8, 9},
+                {10, 11, 12},
+        };
+        int[] result = {1, 2, 3, 6, 9, 12, 11, 10, 7, 4, 5, 8};
+
+        for (int i = 0; i < matrixTraversal.print(input).length; i++) {
+            System.out.print(matrixTraversal.print(input)[i] + ", ");
+        }
+        Assert.assertArrayEquals("traversal 4x4", result, matrixTraversal.print(input));
+    }
 }
