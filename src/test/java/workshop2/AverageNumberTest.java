@@ -1,9 +1,8 @@
-package workshop1;
+package workshop2;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
+import workshop2.AverageNumber;
 
 public class AverageNumberTest {
     @Test
