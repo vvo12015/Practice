@@ -28,7 +28,7 @@ public class AverageNumber {
 
         average = (min - max) / 2;
 
-        average = min - average;
+        average = min - average + 0;
 
         return average;
     }
