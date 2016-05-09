@@ -1,36 +1,37 @@
 package workshop2;
 
-public class AddNumberBase36 {
+class AddBinary {
+    public static final int BASE = 2;
+    public static final int OFFSET_lAST_POSION = 1;
 
-    public static final int BASE = 36;
 
     public String add(String a, String b) {
 
         String result;
-        a = a.toLowerCase();
-        b = b.toLowerCase();
 
-        char[] chA = a.toCharArray();
-        char[] chB = b.toCharArray();
+        char[] bitsA = a.toCharArray();
+        char[] bitsB = b.toCharArray();
+
         int countDigits = a.length() > b.length()?a.length():b.length();
-        int lastPositionA = a.length()-1;
-        int lastPositionB = b.length()-1;
+
+        int lastPositionA = a.length()- OFFSET_lAST_POSION;
+        int lastPositionB = b.length()-OFFSET_lAST_POSION;
 
         char jobArray[] = new char[countDigits];
         boolean discharge = false;
         int jobChar, charA, charB;
 
-        for (int i = jobArray.length-1, j = 0; i >= 0 ; i--, j++) {
+        for (int i = jobArray.length-OFFSET_lAST_POSION, j = 0; i >= 0 ; i--, j++) {
 
             if (lastPositionA >= j)
             {
-                charA = parseNumber(chA[lastPositionA - j]);
+                charA = parseNumber(bitsA[lastPositionA - j]);
             }
             else charA = 0;
 
             if (lastPositionB >= j) {
 
-                charB = parseNumber(chB[lastPositionB - j]);
+                charB = parseNumber(bitsB[lastPositionB - j]);
 
             }
             else charB = 0;
@@ -42,7 +43,10 @@ public class AddNumberBase36 {
                 discharge = false;
             }
 
-            if (jobChar > 35){discharge = true;}
+            if (jobChar > BASE - 1){
+                discharge = true;
+                jobChar = jobChar % BASE;
+            }
 
             jobArray[i] = parseChar(jobChar);
         }
@@ -55,19 +59,10 @@ public class AddNumberBase36 {
     }
 
     private int parseNumber(char c) {
-        int charA;
-
-        if (c >= 'a') charA = c - 'a' + 10;
-        else charA = c - '0';
-
-        return charA;
+        return c - '0';
     }
 
     private char parseChar(int i){
-        if (i > 35) i -= 36;
-
-        if (i >= 10){return (char) (i - 10 + 'a');}
-        else return (char) (i + '0');
+        return (char) (i + '0');
     }
-
 }
