@@ -24,7 +24,7 @@ public class SetZeroTest {
     public void testSetOne() throws Exception {
 
         int input = -1;
-        int result = 0;
+        int result = -1073741825;
 
         SetZero setZero = new SetZero();
 
