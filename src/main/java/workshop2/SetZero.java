@@ -13,7 +13,7 @@ public class SetZero {
     public static final int COUNT_BIT_INT = 32;
     public static final int POSITIVE_REMAINDER = 1;
     public static final int BASE_SYSTEM = 2;
-    public static final int OFFESET = 1;
+    public static final int OFFSET = 1;
 
 
     public int set(int num, int i){
@@ -145,8 +145,9 @@ public class SetZero {
 
         if (bits.size() == COUNT_BIT_INT){
             if (bits.get(COUNT_BIT_INT - OFFSET_LAST_POSITION) == ONE_BIT){
-                bits = inversionBit(bits);
                 bits = bitMinusOne(bits);
+                bits = inversionBit(bits);
+                negativeFlag = true;
             }
         }
 
