@@ -57,8 +57,8 @@ public class LongestStabilityPeriod{
                 max = gdp[i];
                 min = gdp[i];
                 while (Math.abs(gdp[i-1] - max) <= 1 && i > 0 && Math.abs(gdp[i-1] - min) <= 1) {
-                    max = Math.max(gdp[i], max);
-                    min = Math.min(gdp[i], min);
+                    max = Math.max(gdp[i-1], max);
+                    min = Math.min(gdp[i-1], min);
                     i--;
                 }
             }
