@@ -5,7 +5,7 @@ import java.util.Stack;
 
 public class ReversePolishNotation {
 
-    private String[] singsAction = {"/", "*", "-", "+"};
+    private static String[] singsAction = {"/", "*", "-", "+"};
 
     public int evaluate(String expression) throws Exception {
 
@@ -45,11 +45,11 @@ public class ReversePolishNotation {
     }
 
     private int minus(int a, int b){
-        return a - b;
+        return b - a;
     }
 
     private int division(int a, int b){
-        return a / b;
+        return b / a;
     }
 
     private int multiplication(int a, int b){

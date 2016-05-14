@@ -17,4 +17,16 @@ public class ReversePolishNotationTest {
         Assert.assertEquals("sum 40", result, reversePolishNotation.evaluate(sings));
     }
 
+    @Test
+    public void testEvaluateMinus() throws Exception {
+        String sings = "17 2 -";
+
+        int result = 15;
+
+        ReversePolishNotation reversePolishNotation = new ReversePolishNotation();
+
+        Assert.assertEquals("sum 40", result, reversePolishNotation.evaluate(sings));
+    }
+
+
 }
