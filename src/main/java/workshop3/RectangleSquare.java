@@ -62,21 +62,25 @@ public class RectangleSquare {
 
     private ArrayList<Rectangle> analysis(Rectangle r, Rectangle r1){
 
+        ArrayList<Rectangle> result = new ArrayList<Rectangle>();
 
         int start1 = r.getX();
         int start2 = r1.getX();
 
-        int minStart = Math.min(start1, start2);
+        int min = Math.min(start1, start2);
+        int noMin = min == start1?start2:start1;
 
         int end1 = r.getX() + r1.getW();
         int end2 = r1.getX() + r1.getW();
 
-        int maxEnd = Math.max(end1, end2);
+        int max = Math.max(end1, end2);
+        int noMax = max == end1?end2:end1;
 
-        if (((start1 > start2) && (start1 < end2)) && ((end1 > start2) && (end1 < end2))){
-            if (r.getH() >= r1.getH()){
-
+        if (r1.getH() != r.getH()){
+            if (((start1 < start2) && (end2 > end1)) || ((start1 < start2) && (end2 < end1))){
+               result.add(new Rectangle());
             }
+
         }
     }
 
