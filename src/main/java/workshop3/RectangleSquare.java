@@ -1,12 +1,26 @@
 package workshop3;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Stack;
 
 public class RectangleSquare {
 
-    private class Rectangle{
-        int x, h, w;
+    private class Rectangle implements Comparable{
+        private int x;
+        private int h;
+
+        public int getEndX() {
+            return endX;
+        }
+
+        public void setEndX(int endX) {
+            this.endX = endX;
+        }
+
+        private int w;
+        private int endX;
 
         public int getX() {
             return x;
@@ -36,52 +50,70 @@ public class RectangleSquare {
             this.x = x;
             this.h = h;
             this.w = w;
+            this.endX = x + w;
+        }
+
+        public int compareTo(Object o) {
+            Rectangle r = (Rectangle) o;
+
+            return this.x - r.getX();
+        }
+
+        @Override
+        public String toString() {
+            return "Rectangle{" +
+                    "x=" + x +
+                    ", h=" + h +
+                    ", w=" + w +
+                    ", endX=" + endX +
+                    '}';
         }
     }
 
-    private static ArrayList<Rectangle> list = new ArrayList<Rectangle>();
+
 
     public int measure(int[] x, int[] h, int[] w) {
 
-        list.add(new Rectangle(x[0], h[0], w[0]));
+        ArrayList<Rectangle> listRectangle = new ArrayList<Rectangle>();
+        ArrayList<Rectangle> listSquares = new ArrayList<Rectangle>();
+
+        for (int i = 0; i < x.length; i++) {
+            listRectangle.add(new Rectangle(x[i], h[i], w[i]));
+        }
+
+        Collections.sort(listRectangle);
+
+        listSquares.add(listRectangle.get(0));
+
+        ArrayList<Rectangle> forAdd;
 
         Rectangle r, nextR;
-        boolean trueAdd = false;
 
-        for (int i = 1; i < x.length; i++) {
+        for (int i = 1; i < listRectangle.size(); i++) {
 
-            nextR = new Rectangle(x[i], h[i], w[i]);
-            for (Rectangle r :
-                    list) {
-                trueAdd
+            nextR = listRectangle.get(i);
+            for (int j = 0; j < listSquares.size(); j++) {
+
             }
         }
 
         return 0;
     }
 
+    private boolean checkExistInByX(Rectangle r, Rectangle nextR){
+        return (r.getEndX() > nextR.getX());
+    }
+
+    private boolean checkExistFull(Rectangle r, Rectangle nextR){
+        return (r.getEndX() > nextR.getEndX());
+    }
+
     private ArrayList<Rectangle> analysis(Rectangle r, Rectangle r1){
 
         ArrayList<Rectangle> result = new ArrayList<Rectangle>();
 
-        int start1 = r.getX();
-        int start2 = r1.getX();
 
-        int min = Math.min(start1, start2);
-        int noMin = min == start1?start2:start1;
-
-        int end1 = r.getX() + r1.getW();
-        int end2 = r1.getX() + r1.getW();
-
-        int max = Math.max(end1, end2);
-        int noMax = max == end1?end2:end1;
-
-        if (r1.getH() != r.getH()){
-            if (((start1 < start2) && (end2 > end1)) || ((start1 < start2) && (end2 < end1))){
-               result.add(new Rectangle());
-            }
-
-        }
+        return result;
     }
 
 
