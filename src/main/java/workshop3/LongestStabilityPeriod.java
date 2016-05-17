@@ -4,35 +4,6 @@ import java.util.Arrays;
 
 public class LongestStabilityPeriod{
 
-    /*public static final int OFFSET_LAST_POSITION = 1;
-    private static int[] minimums;
-    private static int[] jobArray;
-    public static int currentPositionMinimum = 0;*/
-
-    /*private void genarateArrays(int[] input){
-
-        System.arraycopy(input, 0, minimums, 0, input.length);
-        System.arraycopy(input, 0, jobArray, 0, input.length);
-
-        Arrays.sort(minimums);
-    }
-
-    private void minusMinimum(){
-
-        for (int i = 0; i < jobArray.length; i++) {
-            jobArray[i] -= minimums[currentPositionMinimum];
-
-            if (currentPositionMinimum < jobArray.length - 1){
-                int j = currentPositionMinimum;
-                while (minimums[j] == minimums[currentPositionMinimum] || j < minimums.length - OFFSET_LAST_POSITION) {
-                        j++;
-                }
-                currentPositionMinimum = j;
-            }
-
-        }
-    }*/
-
     public int count(int[] gdp) {
 
         int min = gdp[0];
