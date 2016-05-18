@@ -2,11 +2,13 @@ package workshop3;
 
 
 import java.util.ArrayList;
-import java.util.Stack;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 public class RectangleSquare{
 
-    private class Rectangle{
+    private class Rectangle implements Comparable{
         int x;
         int h;
         int w;
@@ -73,128 +75,57 @@ public class RectangleSquare{
         public String toString() {
             return "x[" + x + "]" + "h[" + h + "]" + "w[" + w + "]";
         }
+
+        public int compareTo(Object o) {
+            Rectangle tmp = (Rectangle) o;
+            return this.x - ((Rectangle) o).getX();
+        }
     }
     public int measure(int[] x, int[] h, int[] w) {
 
-        Stack<Rectangle> newStack = new Stack<Rectangle>();
-        Stack<Rectangle> jobStack = new Stack<Rectangle>();
-
         ArrayList<Rectangle> rectangles = new ArrayList<Rectangle>();
-
+        ArrayList<Integer> points = new ArrayList<Integer>();
 
         for (int i = 0; i < x.length; i++) {
+            points.add(x[i]);
+            points.add(x[i] + w[i]);
             rectangles.add(new Rectangle(x[i], h[i], w[i]));
         }
 
-        Rectangle rectangle;
-        Rectangle nextRectangle;
-        boolean addedElement;
-        jobStack.push(rectangles.get(0));
+        Set<Integer> pointsWithoutDuplicates = new HashSet<Integer>();
+        pointsWithoutDuplicates.addAll(points);
+        points.clear();
+        points.addAll(pointsWithoutDuplicates);
 
-        for (int i = 1; i < rectangles.size(); i++) {
+        Collections.sort(points);
 
-            nextRectangle = new Rectangle(x[i], h[i], w[i]);
-            addedElement = false;
-            jobStack.addAll(newStack);
-            newStack.clear();
+        ArrayList<Rectangle> columns = new ArrayList<Rectangle>();
+        int heightIntervalBetweenPointers;
+        for (int i = 0; i < points.size()-1; i++) {
+            heightIntervalBetweenPointers = 0;
+            int beginPoint = points.get(i);
+            int endPoint = points.get(i+1);
 
-            while (!jobStack.empty()) {
-
-                rectangle = jobStack.pop();
-
-                if (rectangle.equals(nextRectangle)){
-                    newStack.push(rectangle);
+            for (Rectangle r :
+                    rectangles) {
+                if ((r.getX() <= beginPoint) &&
+                        (r.getEndX() >= endPoint) &&
+                        (r.getH() > heightIntervalBetweenPointers)){
+                    heightIntervalBetweenPointers = r.getH();
                 }
-
-                if (nextRectangle.getX() >= rectangle.getEndX() ||
-                        nextRectangle.getEndX() <= rectangle.getX()) {
-                    addedElement = true;
-                }
-
-                if ((nextRectangle.getX() > rectangle.getX()) &&
-                        (nextRectangle.getEndX() < rectangle.getEndX())) {
-
-                    if (nextRectangle.getH() > rectangle.getH()){
-                        newStack.push(new Rectangle(rectangle.getX(), rectangle.getH(),
-                                nextRectangle.getX()));
-
-                        newStack.push(nextRectangle);
-
-                        newStack.push(new Rectangle(nextRectangle.getEndX(), rectangle.getH(),
-                                rectangle.getEndX() - nextRectangle.getEndX()));
-                    }else {
-                        newStack.push(rectangle);
-                    }
-                }else if (nextRectangle.getX() > rectangle.getX() && nextRectangle.getEndX() > rectangle.getEndX()
-                        && nextRectangle.getX() < rectangle.getEndX()){
-                    if (nextRectangle.getH() > rectangle.getH()) {
-                        newStack.push(new Rectangle(rectangle.getX(), rectangle.getH(),
-                                nextRectangle.getX() - rectangle.getX()));
-                        newStack.push(nextRectangle);
-                    }else {
-                        newStack.push(new Rectangle(rectangle.getEndX(), nextRectangle.getH(),
-                                nextRectangle.getEndX() - rectangle.getEndX()));
-
-                        newStack.push(rectangle);
-                    }
-                }
-                else if (nextRectangle.getX() < rectangle.getX() && nextRectangle.getEndX() < rectangle.getEndX()
-                        && nextRectangle.getEndX() > rectangle.getX()){
-                    newStack.push(new Rectangle(nextRectangle.getX(), nextRectangle.getH(),
-                            rectangle.getX() - nextRectangle.getX()));
-                    newStack.push(rectangle);
-                }else if ((nextRectangle.getX() == rectangle.getX())){
-                    if (rectangle.getH() > nextRectangle.getH()){
-                        newStack.push(rectangle);
-                        newStack.push(new Rectangle(rectangle.getEndX(), nextRectangle.getH(),
-                                nextRectangle.getEndX() - rectangle.getEndX()));
-                    }else {
-                        newStack.push(nextRectangle);
-                        newStack.push(new Rectangle(nextRectangle.getEndX(), rectangle.getH(),
-                                rectangle.getEndX() - nextRectangle.getEndX()));
-                    }
-                }
-                if (addedElement) {
-                    newStack.push(nextRectangle);
-                    newStack.push(rectangle);
-                    addedElement = false;
-                }
-
             }
 
+            if (heightIntervalBetweenPointers > 0){
+                columns.add(new Rectangle(beginPoint, heightIntervalBetweenPointers, endPoint - beginPoint));
+            }
         }
-
-        rectangles.clear();
-        rectangles.addAll(newStack);
-        ArrayList<Rectangle> newRectangles = new ArrayList<Rectangle>();
 
         int square = 0;
-        if (rectangles.size() == 1){
-
+        for (Rectangle r :
+                columns) {
+            square += r.square;
         }
-        for (int i = 0; i < rectangles.size(); i++) {
-            rectangle = rectangles.get(i);
-            addedElement = true;
-            for (int j = 0; j < newRectangles.size(); j++) {
-                nextRectangle = newRectangles.get(j);
-                if (hasTo(rectangle, nextRectangle)){
-                    addedElement = false;
-                }
-            }
-
-            if (addedElement || rectangles.size() == 1) {
-                newRectangles.add(rectangle);
-                square += rectangle.square;
-                System.out.println(rectangle);
-            }
-        }
-
         return square;
     }
 
-    private boolean hasTo(Rectangle r, Rectangle r1){
-        if ((r.getX() >= r1.getX() && (r.getEndX() <= r1.getEndX()) && r.getH() >= r1.getH())){
-            return true;
-        }else   return false;
-    }
 }
