@@ -2,9 +2,6 @@ package workshop3;
 
 import java.util.Arrays;
 
-/**
- * Created by vvo12 on 14.05.2016.
- */
 public class GnomeFood {
 
     public int[] find(int[] gnames, int[] portions) {
