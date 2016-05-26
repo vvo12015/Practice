@@ -17,6 +17,17 @@ public class KmpSmallestPeriodTest {
         Assert.assertEquals("abc", result, kmpSmallestPeriod.findSmallestPeriod(input));
     }
 
+    @Test
+    public void findSmallestPeriodNext() throws Exception {
+        String input = "abdabcabdabc";
+        String result = "abdabc";
+
+        KmpSmallestPeriod kmpSmallestPeriod = new KmpSmallestPeriod();
+
+        Assert.assertEquals("abdabc", result, kmpSmallestPeriod.findSmallestPeriod(input));
+    }
+
+    @Test
     public void findSmallestPeriodOneChar() throws Exception {
         String input = "abcdefg";
         String result = null;

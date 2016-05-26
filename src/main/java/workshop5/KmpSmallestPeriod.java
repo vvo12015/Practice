@@ -1,32 +1,26 @@
 package workshop5;
 
 public class KmpSmallestPeriod {
+
     public String findSmallestPeriod(String input){
 
-        int subLength = input.length() / 2;
-        int countJoins = 1;
-        String smallestPeriod = null;
+        String result = null;
+        if (input.indexOf(input.charAt(0), 1) > -1 ) {
 
-        for (int i = subLength; i > 0 ; i--) {
-            if ((countOccurrence(input, input.substring(0, i)) > countJoins) &&
-                    (countOccurrence())){
-                smallestPeriod = input.substring(0, i);
-                countJoins = countOccurrence(input, input.substring(0, i));
+            for (int i = 0; i < input.length();) {
+
+                String oneSubString = input.substring(0, input.indexOf(input.charAt(i), i+1));
+                String secondSubstring = input.substring(input.indexOf(input.charAt(i), i + 1), input.indexOf(input.charAt(i), i + 1) * 2);
+
+                System.out.println(oneSubString);
+                System.out.println(secondSubstring);
+                if (oneSubString.equals(secondSubstring)) {
+                    return oneSubString;
+                }else {
+                    i += input.indexOf(input.charAt(i), 1);
+                }
             }
         }
-        return smallestPeriod;
-    }
-
-
-    private int countOccurrence(String string, String subString){
-
-        int countOccurrence = 0;
-        for (int i = 0; i < string.length(); i++) {
-            if (string.indexOf(subString, i) > -1){
-                countOccurrence++;
-                i += subString.length()-1;
-            }
-        }
-        return countOccurrence;
+        return result;
     }
 }
